@@ -1,5 +1,27 @@
 # Rental app based on Node.js
-## Kejing test
+
+## target features
+
+###Goal: 设计一款租房网站平台，可以满足以下几个功能
+	- 提供房主发布信息
+	- 租客可以浏览信息
+	- 租客可以在信息发布栏浏览所有的租房信息
+	- 租客可以在Google Map上面查看当前房子的信息(位置)
+	- 展示第三方平台发布的租房信息， Vanpeople， VanSky， craiglist
+
+
+
+###技术架构
+	- 服务器端： Node.js, Express, MongoDB
+	- 前端框架: Vue.js, Semantic UI
+
+
+###Reference: 
+	- https://github.com/nswbmw/N-blog
+	- http://expressjs.com/zh-cn/guide/using-middleware.html
+	- https://semantic-ui.com/elements/loader.html
+
+
 ## 运行 How to run
 
 ```bash
