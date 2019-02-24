@@ -92,6 +92,6 @@ The system will crawl rental information of 58 tongcheng, and Baidu map for visu
 </pre>
 
 
-## 教程 Tutorial
+## Tutorial
 
-[http://answershuto.github.io/jekyll/update/2016/10/25/养只爬虫当宠物-Node.js爬虫爬取58同城租房信息.html](http://answershuto.github.io/jekyll/update/2016/10/25/养只爬虫当宠物-Node.js爬虫爬取58同城租房信息.html)
+https://zhuanlan.zhihu.com/p/24574485
