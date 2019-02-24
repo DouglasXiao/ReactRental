@@ -56,6 +56,32 @@ git push origin meimei:master
 ```bash
 git push <remote> <local branch name>:<remote branch to push into>
 ```
+
+#### delete branch
+
+> Industrial level, every feature/bug has a local work branch, after work, delete this branch.
+
+```bash
+$ git push --delete <remote_name> <branch_name>
+$ git branch -d <branch_name>
+```
+Note that in most cases the remote name is origin.
+
+Delete Local Branch
+To delete the local branch use one of the following:
+```bash
+$ git branch -d branch_name
+$ git branch -D branch_name
+```
+Note: The -d option is an alias for --delete, which only deletes the branch if it has already been fully merged in its upstream branch. You could also use -D, which is an alias for --delete --force, which deletes the branch "irrespective of its merged status." [Source: man git-branch]
+
+Delete Remote Branch [Updated on 8-Sep-2017]
+As of Git v1.7.0, you can delete a remote branch using
+```bash
+$ git push <remote_name> --delete <branch_name>
+$ git push <remote_name> :<branch_name>
+```
+
 ## 运行 How to run
 
 ```bash
