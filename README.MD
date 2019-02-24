@@ -35,9 +35,16 @@
 #### standard master push
 
 ```bash
+# commit on LOCAL_WORK_BRANCH
+git add -A
+git commit -m "comments"
+# checkout to local master branch
 git checkout master
+# pull remote master
 git pull
-git merge LOCAL_BRANCH
+# merge LOCAL_WORK_BRANCH to local master
+git merge LOCAL_WORK_BRANCH
+# now local master has latest LOCAL_WORK_BRANCH and remote master, just push to remote master
 git push
 ```
 
