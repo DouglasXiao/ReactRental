@@ -17,17 +17,17 @@
 
 ### 技术架构
 
-服务器端： Node.js, Express, MongoDB
+	服务器端： Node.js, Express, MongoDB
 
-前端框架: Vue.js, Semantic UI
+	前端框架: Vue.js, Semantic UI
 
 ### Reference: 
 
-https://github.com/nswbmw/N-blog
+	https://github.com/nswbmw/N-blog
 
-http://expressjs.com/zh-cn/guide/using-middleware.html
+	http://expressjs.com/zh-cn/guide/using-middleware.html
 
-https://semantic-ui.com/elements/loader.html
+	https://semantic-ui.com/elements/loader.html
 
 
 ## git work steps
@@ -38,7 +38,7 @@ https://semantic-ui.com/elements/loader.html
 git checkout master
 git pull
 git merge LOCAL_BRANCH
-git push origin LOCAL_BRANCH:master
+git push
 ```
 
 #### cross branch push
