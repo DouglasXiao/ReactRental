@@ -13,10 +13,10 @@ function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
     zoom: 8
-	}); // create map instance
+  }); // create map instance
   infoWindow = new google.maps.InfoWindow();
 
-	if (navigator.geolocation) {
+  if (navigator.geolocation) {
     // Recenter map to current position.
     navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
