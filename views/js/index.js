@@ -10,15 +10,15 @@ var infoWindow;
 function initMap() {
   var vancouver = new google.maps.LatLng(49.246292, -123.116226);
 
-	map = new google.maps.Map(document.getElementById('map'), {
+  map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
     zoom: 8
 	}); // create map instance
   infoWindow = new google.maps.InfoWindow();
 
 	if (navigator.geolocation) {
-		// Recenter map to current position.
-		navigator.geolocation.getCurrentPosition(function(position) {
+    // Recenter map to current position.
+    navigator.geolocation.getCurrentPosition(function(position) {
             var pos = {
               lat: position.coords.latitude,
               lng: position.coords.longitude
@@ -28,14 +28,14 @@ function initMap() {
       console.log(`Latitude : ${position.coords.latitude}`);
       console.log(`Longitude: ${position.coords.longitude}`);
 
-			// This infoWindow operation is useless now since we have mark operation.
+      // This infoWindow operation is useless now since we have mark operation.
       // infoWindow.setPosition(pos);
       // infoWindow.setContent(position.name);
       // infoWindow.open(map);
       map.setCenter(pos);
-		}, function() {
+    }, function() {
       handleLocationError(true, infoWindow, map.getCenter());
-		});
+    });
 
 		// TODO : listen to clicking or search event
     markRequest("dmv california");
@@ -74,10 +74,10 @@ function markRequest(query) {
   // expected result should be a list of results.
   service.findPlaceFromQuery(request, function(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-			console.log(`results.size()=${results.length}`);
+      console.log(`results.size()=${results.length}`);
       for (var i = 0; i < results.length; i++) {
         createMarker(results[i]);
-		  } 
+      } 
 		  // recenter map to first match result.
 		  // map.setCenter(results[0].geometry.location);
     } 
