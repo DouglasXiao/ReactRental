@@ -4,39 +4,83 @@
 
 ### Goal: 设计一款租房网站平台，可以满足以下几个功能
 
-#### 提供房主发布信息
-#### 租客可以浏览信息
-#### 租客可以在信息发布栏浏览所有的租房信息
-#### 租客可以在Google Map上面查看当前房子的信息(位置)
-#### 展示第三方平台发布的租房信息， Vanpeople， VanSky， craiglist
+ 	提供房主发布信息
+ 
+ 	租客可以浏览信息
+ 
+ 	租客可以在信息发布栏浏览所有的租房信息
+ 
+ 	租客可以在Google Map上面查看当前房子的信息(位置)
+ 
+ 	展示第三方平台发布的租房信息， Vanpeople， VanSky， craiglist
+
 
 ### 技术架构
 
-#### 服务器端： Node.js, Express, MongoDB
-#### 前端框架: Vue.js, Semantic UI
+	服务器端： Node.js, Express, MongoDB
+
+	前端框架: Vue.js, Semantic UI
 
 ### Reference: 
 
-#### https://github.com/nswbmw/N-blog
-#### http://expressjs.com/zh-cn/guide/using-middleware.html
-#### https://semantic-ui.com/elements/loader.html
+	https://github.com/nswbmw/N-blog
+
+	http://expressjs.com/zh-cn/guide/using-middleware.html
+
+	https://semantic-ui.com/elements/loader.html
+
 
 ## git work steps
 
-#### standard push
+#### standard master push
 
 ```bash
+# commit on LOCAL_WORK_BRANCH
+git add -A
+git commit -m "comments"
+# checkout to local master branch
 git checkout master
+# pull remote master
 git pull
-git merge LOCAL_BRANCH
-git push origin LOCAL_BRANCH:master
+# merge LOCAL_WORK_BRANCH to local master
+git merge LOCAL_WORK_BRANCH
+# now local master has latest LOCAL_WORK_BRANCH and remote master, just push to remote master
+git push
 ```
 
-#### push cross branch
+#### cross branch push
 ```bash
 git push origin meimei:master
 ```
-> git push <remote> <local branch name>:<remote branch to push into>
+
+```bash
+git push <remote> <local branch name>:<remote branch to push into>
+```
+
+#### delete branch
+
+> Industrial level, every feature/bug has a local work branch, after work, delete this branch.
+
+```bash
+$ git push --delete <remote_name> <branch_name>
+$ git branch -d <branch_name>
+```
+Note that in most cases the remote name is origin.
+
+Delete Local Branch
+To delete the local branch use one of the following:
+```bash
+$ git branch -d branch_name
+$ git branch -D branch_name
+```
+Note: The -d option is an alias for --delete, which only deletes the branch if it has already been fully merged in its upstream branch. You could also use -D, which is an alias for --delete --force, which deletes the branch "irrespective of its merged status." [Source: man git-branch]
+
+Delete Remote Branch [Updated on 8-Sep-2017]
+As of Git v1.7.0, you can delete a remote branch using
+```bash
+$ git push <remote_name> --delete <branch_name>
+$ git push <remote_name> :<branch_name>
+```
 
 ## 运行 How to run
 
