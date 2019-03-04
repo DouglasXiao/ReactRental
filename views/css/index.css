@@ -16,3 +16,53 @@ body{
 	margin: 20px auto;
 	cursor: pointer;
 }
+
+.info-window {
+	font-size: 14px;
+	width: 256px
+}
+
+.info-window br {
+	display: none
+}
+
+.info-window:after {
+	content: "";
+	display: table;
+	clear: both
+}
+
+.info-window .col1 {
+	float: right;
+	width: 166px;
+	word-wrap: break-word
+}
+
+.info-window .col-2 {
+	float: left;
+	width: 80px;
+	margin-right: 10px
+}
+
+.info-window .loc-detail {
+	float: left;
+}
+
+.info-window .col-2 img {
+	width: 100%
+}
+
+.info-window .title {
+	text-transform: uppercase;
+	font-size: 16px;
+	font-weight: 600;
+	display: block;
+	color: #f84b01
+}
+
+.info-window .features {
+	font-size: 14px;
+	font-weight: 500;
+	display: block;
+	color: #333333
+}

@@ -1,5 +1,6 @@
 var map; 
 var infoWindow;
+var geocoder;
 
 /***********************************************************************************************
 *Function Name : initMap
@@ -8,42 +9,45 @@ var infoWindow;
 *Return ：null
 ***********************************************************************************************/
 function initMap() {
-  var vancouver = new google.maps.LatLng(49.246292, -123.116226);
+	var vancouver = new google.maps.LatLng(49.246292, -123.116226);
+	geocoder = new google.maps.Geocoder();
 
 	map = new google.maps.Map(document.getElementById('map'), {
     center: vancouver,
-    zoom: 8
+		zoom: 15,
+		mapTypeId: google.maps.MapTypeId.ROADMAP
 	}); // create map instance
   infoWindow = new google.maps.InfoWindow();
 
 	if (navigator.geolocation) {
 		// Recenter map to current position.
 		navigator.geolocation.getCurrentPosition(function(position) {
-            var pos = {
-              lat: position.coords.latitude,
-              lng: position.coords.longitude
-            };
+			var pos = {
+				lat: position.coords.latitude,
+				lng: position.coords.longitude
+			};
 
       console.log('Your current position is:');
       console.log(`Latitude : ${position.coords.latitude}`);
       console.log(`Longitude: ${position.coords.longitude}`);
 
-			// This infoWindow operation is useless now since we have mark operation.
-      // infoWindow.setPosition(pos);
-      // infoWindow.setContent(position.name);
-      // infoWindow.open(map);
-      map.setCenter(pos);
+			map.setCenter(pos);
 		}, function() {
       handleLocationError(true, infoWindow, map.getCenter());
 		});
-
-		// TODO : listen to clicking or search event
-    markRequest("dmv california");
-
 	} else {
     // Browser does not support Geolocation
     handleLocationError(false, infoWindow, map.getCenter());
-  }
+	}
+	
+	var rentalList = [];
+	rentalList.push('6058 selma ave, burnaby, bc, canada');
+	rentalList.push('6033 selma ave, burnaby, bc, canada');
+	rentalList.push('5175 Kingsway, Burnaby, BC V5H 2E6');
+
+	for (var i = 0; i < rentalList.length; ++i) {
+		decodeAndMarkAddress(rentalList[i]);
+	}
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -54,34 +58,17 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
   infoWindow.open(map);
 }
 
-/***********************************************************************************************
-*Function Name : markRequest
-*Description ：
-	mark locations on map matching search query,
-	description shows up upon clicking marker.
-*Params ：place
-*Return ：null
-***********************************************************************************************/
-function markRequest(query) {
-  // Mark map with multiple locations matching query and
-  var request = {
-    query: query,
-    fields: ['name', 'geometry'],
-  };
-	
-  service = new google.maps.places.PlacesService(map);
-  // TODO : debug findPlaceFromQuery issue: only one/null result returned, 
-  // expected result should be a list of results.
-  service.findPlaceFromQuery(request, function(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-			console.log(`results.size()=${results.length}`);
-      for (var i = 0; i < results.length; i++) {
-        createMarker(results[i]);
-		  } 
-		  // recenter map to first match result.
-		  // map.setCenter(results[0].geometry.location);
-    } 
-  });
+function decodeAndMarkAddress(address) {
+	geocoder.geocode({'address': address}, function(results, status) {
+		if (status == 'OK') {
+			var locationURL = "";
+			var thumbnailURL = "";
+			var infoWindowHTML = "<div class='info-window'><div class='col1'><div class='title'>Beautiful SeaView House</div><br><div class='features'>" + address + "</div><br><a class='loc-detail' href='" + locationURL + "'>View place details</a></div><div class='col-2'>" + thumbnailURL + "</div></div>";
+			createMarker(results[0].geometry.location, infoWindowHTML);
+		} else {
+			console.log('Geocode was not successful for the following reason: ' + status);
+		}
+	});
 }
 
 /***********************************************************************************************
@@ -90,16 +77,18 @@ function markRequest(query) {
 *Params ：place
 *Return ：null
 ***********************************************************************************************/
-function createMarker(place) {
+function createMarker(pos, infoWindowHTML) {
   var marker = new google.maps.Marker({
     map: map,
-    position: place.geometry.location
+    position: pos
   });
 
   google.maps.event.addListener(marker, 'click', function() {
-    infoWindow.setContent(place.name);
+		infoWindow.setContent(infoWindowHTML);
     infoWindow.open(map, marker);
-  });
+	});
+	
+	return marker;
 }
 
 // Below needed to be refactored, not used currently, especially BMap should be removed
