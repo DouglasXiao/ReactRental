@@ -1,39 +1,56 @@
 'use strict';
 
-const e = React.createElement;
+const InputGroup = ReactBootstrap.InputGroup;
+const DropdownButton = ReactBootstrap.DropdownButton;
+const Dropdown = ReactBootstrap.Dropdown;
+const FormControl = ReactBootstrap.FormControl;
 
 class SearchBox extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { content: '', search: ''};
+    this.state = {search: '',
+      location: [
+        {
+            id: 0,
+            position: 'California',
+            selected: false,
+            key: 'location'
+        },
+        {
+          id: 1,
+          position: 'Vancouver',
+          selected: false,
+          key: 'location'
+        }
+      ]};
 
     // This binding is necessary to make `this` work in the callback
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-  }
-
-  handleChange(event) {
-    this.setState({content: this.state.content + event.target.value}, function(){
-      console.log('Input changes to: ' + this.state.content);});
   }
 
   handleSubmit(event) {
     event.preventDefault();
-    this.setState({search: this.state.content}, function(){
-      console.log('A place is submitted: ' + this.state.search);});
-    this.state.content = '';
+    const data = new FormData(event.target);
+    this.setState({search: data.get('search')}, function(){
+      console.log('A place is searched: ' + this.state.search);});
   }
 
   render() {
     return (
       <div id='searchbox' style = {{padding: 5}}>
         <form onSubmit={this.handleSubmit}>
-          <label>
-            Search:
-            <input type="text" name="search" value={this.state.search}
-              placeholder={this.state.content = '' ? 'where to go' : this.state.content}
-              style = {{width: 100, height: 30}} onChange={this.handleChange}></input>
-          </label>
+          <label>Search:</label>
+          <InputGroup size="lg" className="mb-3">
+            <DropdownButton as={InputGroup.Prepend} variant="success" title="Filter" id="search-dropdown">
+              {this.state.location.map((item) => (
+                <Dropdown.Item href="#" key={item}>
+                  {item.position}
+                </Dropdown.Item>
+              ))}
+            </DropdownButton>
+            <FormControl name="search" aria-describedby="basic-addon1" placeholder='where to go'>
+            </FormControl>
+          </InputGroup>
           <input type="submit" value='Go'></input>
         </form>
       </div>
@@ -41,5 +58,4 @@ class SearchBox extends React.Component {
   }
 }
 
-const domContainer = document.querySelector('#search');
-ReactDOM.render(e(SearchBox), domContainer);
+ReactDOM.render(<SearchBox />, document.getElementById('search'));
