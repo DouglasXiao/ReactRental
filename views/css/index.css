@@ -10,6 +10,20 @@ body{
 	height:100%
 }  
 
+#search{
+	height:100%
+}  
+
+.left{
+	float: left;
+	width: 10%
+}
+
+.right{
+	float: left;
+	width: 90%
+}
+
 .showImg{
 	width: 200px;
 	height: 160px;
