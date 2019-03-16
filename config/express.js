@@ -6,9 +6,6 @@ module.exports = function(){
 	console.log('init express..');
 	var app = express();
 
-	app.set('view engine','ejs');
-	app.use(express.static(__dirname+'/../views'));
-
 	app.use(bodyParser.json());
 
 	require('../app/routes/rental.server.routes')(app);

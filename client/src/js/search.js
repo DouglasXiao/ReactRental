@@ -1,11 +1,11 @@
-'use strict';
+import InputGroup from 'react-bootstrap/InputGroup';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown';
+import FormControl from 'react-bootstrap/FormControl';
+import Button from 'react-bootstrap/Button';
+import React, { Component } from 'react';
 
-const InputGroup = ReactBootstrap.InputGroup;
-const DropdownButton = ReactBootstrap.DropdownButton;
-const Dropdown = ReactBootstrap.Dropdown;
-const FormControl = ReactBootstrap.FormControl;
-
-class SearchBox extends React.Component {
+export default class SearchBox extends Component {
   constructor(props) {
     super(props);
     this.state = {search: '',
@@ -39,11 +39,11 @@ class SearchBox extends React.Component {
     return (
       <div id='searchbox' style = {{padding: 5}}>
         <form onSubmit={this.handleSubmit}>
-          <label>Search:</label>
-          <InputGroup size="lg" className="mb-3">
+          {/* <label>Search:</label> */}
+          <InputGroup size="sm" className="mb-3">
             <DropdownButton as={InputGroup.Prepend} variant="success" title="Filter" id="search-dropdown">
               {this.state.location.map((item) => (
-                <Dropdown.Item href="#" key={item}>
+                <Dropdown.Item href="#" key={item.id}>
                   {item.position}
                 </Dropdown.Item>
               ))}
@@ -51,11 +51,10 @@ class SearchBox extends React.Component {
             <FormControl name="search" aria-describedby="basic-addon1" placeholder='where to go'>
             </FormControl>
           </InputGroup>
-          <input type="submit" value='Go'></input>
+          {/* <input type="submit" value='Go'></input> */}
+          <Button as="input" type="submit" value="Go" size="sm" block />
         </form>
       </div>
     );
   }
 }
-
-ReactDOM.render(<SearchBox />, document.getElementById('search'));
