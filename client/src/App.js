@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import MapContainer from './js/mapContainer.js';
 import SearchBox from './js/search.js';
 // import logo from './logo.svg';
 import './App.css';
@@ -23,15 +22,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <div className="left">
-          <SearchBox />
+        <div>
+          <div>
+            <SearchBox />
+          </div>
           <div className="inner">
-            <h1>Users</h1>
+            <p>Users</p>
             <div key={this.state.username}>{this.state.username}</div>
           </div>
-        </div>
-        <div className="right">
-          <MapContainer />
         </div>
       </div>
     );

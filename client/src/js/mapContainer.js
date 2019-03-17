@@ -56,7 +56,8 @@ export class MapContainer extends Component {
   });
 
   render() {
-    console.log("test map react here");
+    console.log("map react locations from parent:" + this.props.locations.length);
+
     return (
       <Map google={this.props.google} 
            zoom={14}
@@ -74,17 +75,17 @@ export class MapContainer extends Component {
             <div class='col1'>
               <div class='title'>Beautiful SeaView House</div><br/>
               <div class='features'>" + {this.state.selectedPlace.name} + "</div><br/>
-                <a class='loc-detail' href='" + locationURL + "'>View place details</a>
-              </div>
-              <div class='col-2'>thumbnailURL</div>
+              <a class='loc-detail' href='" + locationURL + "'>View place details</a>
             </div>
+            <div class='col-2'>thumbnailURL</div>
+          </div>
 
         </InfoWindow>
       </Map>
     );
   }
 }
- 
+
 export default GoogleApiWrapper({
   apiKey: 'AIzaSyB_1Rq6A6BV8gzzxRtd7rgpOpRkSw1i8yQ'
 })(MapContainer)
