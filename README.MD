@@ -108,20 +108,6 @@ A crawler system based on Node.js.
 
 The system will crawl rental information of 58 tongcheng, and Baidu map for visual display, user-friendly quickly find their own near the rental information.
 
-
-
-![img](./views/image/1.png)   
-
-
-![img](./views/image/2.png)
-
-
-![img](./views/image/3.png)     
-
-
-![img](./views/image/4.png)
-
-
 ## 目录结构 Directory Structure
 <pre>
 ├─  package.json        # 项目配置 project configuration
