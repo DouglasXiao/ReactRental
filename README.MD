@@ -91,20 +91,21 @@ cd Rental
 npm install
 
 # app running
-npm start
+npm start  (server side)
+
+Then open a new tab in terminal, and
+
+cd client
+npm start  (client side)
 ```
 
 
-	open localhost:2000
+	open localhost:3000
 
 
 ## 简介 Introduction
 
-基于Node.js的爬虫系统。
-
-爬取58同城上的杭州租房信息，并用百度地图进行可视化显示，方便用户快速查找自己附近的租房信息。
-
-A crawler system based on Node.js.
+A crawler system based on Node.js in backend and React in frontend.
 
 The system will crawl rental information of 58 tongcheng, and Baidu map for visual display, user-friendly quickly find their own near the rental information.
 
