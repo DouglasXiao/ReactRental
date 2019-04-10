@@ -16,6 +16,20 @@ export class MapContainer extends Component {
     var geocoder = new google.maps.Geocoder();
     var infoWindow = new google.maps.InfoWindow();
 
+    var whereToGoInput = document.getElementById('form');
+    var searchBox = new google.maps.places.SearchBox(whereToGoInput);
+    searchBox.addListener('places_changed', function() {
+      var places = searchBox.getPlaces();
+
+      if (places.length == 0) {
+        return;
+      }
+
+      places.forEach(function(place) {
+        map.setCenter(place.geometry.location);
+      });
+    })
+
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var pos = {
@@ -84,16 +98,28 @@ export class MapContainer extends Component {
     });
   }
 
+  componentWillMount() {
+    console.log("componentWillMount");
+  }
+
+  componentWillUpdate() {
+    console.log("componentWillUpdate");
+  }
+
   render() {
-    console.log("map react locations from parent:" + this.props.locations.length);
-
     return (
-      <Map google={this.props.google} 
-           zoom={14}
-           onReady={this.fetchCurrentLocation} >
-
-      </Map>
+      <Map google={this.props.google}
+           zoom={15}
+           onReady={this.fetchCurrentLocation} />
     );
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount");
+  }
+
+  componentDidUpdate() {
+    console.log("componentDidUpdate");
   }
 }
 
