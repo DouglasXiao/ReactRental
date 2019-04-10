@@ -10,6 +10,8 @@ import MapContainer from './mapContainer.js';
 export default class SearchBox extends Component {
   constructor(props) {
     super(props);
+    this.whereToGo = "searchBar";
+
     this.state = {search: '',
       locations: [
         {
@@ -39,8 +41,9 @@ export default class SearchBox extends Component {
   handleSubmit(event) {
     event.preventDefault();
     const data = new FormData(event.target);
-    this.setState({search: data.get('search')}, function(){
-      console.log('A place is searched: ' + this.state.search);});
+    this.setState({search: data.get(this.whereToGo)}, function(){
+      console.log('A place is searched: ' + this.state.search);
+    });
   }
 
   render() {
@@ -57,10 +60,9 @@ export default class SearchBox extends Component {
                     </Dropdown.Item>
                   ))}
                 </DropdownButton>
-                <FormControl name="search" aria-describedby="basic-addon1" placeholder='where to go'>
+                <FormControl id='form' name={this.whereToGo} aria-describedby="basic-addon1" placeholder='where to go'>
                 </FormControl>
               </InputGroup>
-              <Button variant="info" as="input" type="submit" value="Go" size="sm" block />
             </form>
           </div>
 
@@ -72,7 +74,7 @@ export default class SearchBox extends Component {
         </div>
         
         <div className="right">
-          <MapContainer locations={this.state.locations}/>
+          <MapContainer location={this.state.search} />
         </div>
       </div>
     );
