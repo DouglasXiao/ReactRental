@@ -111,34 +111,26 @@ The system will crawl rental information of 58 tongcheng, and Baidu map for visu
 
 ## 目录结构 Directory Structure
 <pre>
-├─  package.json        # 项目配置 project configuration
-├─  README.md           # 项目说明 project instruction
-├─  app.js              # 项目入口文件 Project entry file
-├─  node_modules        # npm依赖包 npm dependent
-├─  .babelrc            # babel配置 babel configuration
-│
-│
-├─  app                 # node后端业务 node business
-      │
-      │ controllers     #  控制器 controller
-      │ models          #  数据模型 data model
-      │ routes          #  路由 route
-│
-│
-├─  bin                 # node启动 node start
-│
-│
-└─  views               # 前端代码 front end code 
-      │ css             # css文件 css
-      │ js              # js文件 js
-      │ image           # 图片文件 image
-      │ index.html      # 首页 index
-│
-│
-└─  config              # node配置 node configuration
+|- app                  # node backend
+     |
+     |- controllers
+     |- models          # data model
+     |- routes          # route
+|- bin                  # node start
+|- config               # node configuration & express init
+|- node_modules         # backend npm dependents
+|- .babelrc             # babel configuration
+|- .gitignore           # ignore untracked files
+|- app.js               # project entry file
+|- package.json         # project configuration
+|- client               # React frontend
+     |- node_modules    # frontend npm dependents
+     |- public          # front page related code and icon
+     |- src             # frontend entry & js, css source files
+     |- .gitignore      # ignore untracked files
+     |- package.json    # dependencies & proxy configurations
 </pre>
 
-
-## Tutorial
-
-https://zhuanlan.zhihu.com/p/24574485
+## Web crawler js framework
+SuperAgent (HTTP GET/POST Library): https://www.jianshu.com/p/98b854322260
+Cheerio (Decode the HTML text): https://github.com/cheeriojs/cheerio

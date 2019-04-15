@@ -1,6 +1,8 @@
 var http = require('http');
+var cfg = require('../../config/config');
+
+var superagent = require('superagent');
 var cheerio = require('cheerio');
-var cfg = require('../../config/config')
 
 /*url存储对象*/
 let rentalObj = (function(){
@@ -145,17 +147,60 @@ function getRentalInfosByUrl(url){
 	rentalInfosObj.push(url);
 }
 
+function tryToCrawWeb(url) {
+	var placeList = [];
+
+	superagent
+		.get(url)
+		.end(function(err, res) {
+			var $ = cheerio.load(res.text);
+			var dom = $('li').filter(function(index, element) {
+				return $(this).text() === 'sublets / temporary';
+			}).html();
+
+			var theHref = cheerio.load(dom).root().find('a').attr('href');
+			console.log("The next level href is: " + (url + theHref));
+
+			superagent
+				.get(url + theHref)
+				.end(function(err, res) {
+					var $ = cheerio.load(res.text);
+					$('.result-row').each(function(index, element) {
+						var theHref2 = cheerio.load($(this).html()).root().find('a').attr('href');
+						console.log("For each rental page, the href is: " + theHref2);
+
+						superagent
+							.get(theHref2)
+							.end(function(err, res) {
+								var $ = cheerio.load(res.text);
+
+								$('div').each(function(index, element) {
+									if ($(element).attr('id') === 'map') {
+										placeList.push({lat: $(element)['0']['attribs']['data-latitude'], lng: $(element)['0']['attribs']['data-longitude']});
+										console.log('The lat and lng pair is: ' + $(element)['0']['attribs']['data-latitude'] + " " + $(element)['0']['attribs']['data-longitude']);
+									}
+								});
+							});
+					});
+				});
+		});
+
+	return placeList;
+}
+
 
 
 module.exports = {
 	init(){
-		updateRentalUrl();	
+		tryToCrawWeb('https://vancouver.craigslist.org');
+
+		updateRentalUrl();
 		rentalObj.register(getRentalInfosByUrl);
 	},
 
 	getRentalInfos(req, res, next){
-		let params = rentalInfosObj.getRentalInfos();
+		// let params = tryToCrawWeb('https://vancouver.craigslist.org');
 		console.log('params',params)
-		res.json({result: true,params});
+		res.json({result: true, params});
 	}
 }

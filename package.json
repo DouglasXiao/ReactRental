@@ -15,7 +15,8 @@
     "cheerio": "^0.22.0",
     "express": "^4.13.4",
     "http": "0.0.0",
-    "request": "^2.75.0"
+    "request": "^2.75.0",
+    "superagent": "^5.0.2"
   },
   "devDependencies": {
     "babel-cli": "^6.16.0",
