@@ -16,6 +16,7 @@ export class MapContainer extends Component {
     var geocoder = new google.maps.Geocoder();
     var infoWindow = new google.maps.InfoWindow();
 
+    // Set listener to user search places
     var whereToGoInput = document.getElementById('form');
     var searchBox = new google.maps.places.SearchBox(whereToGoInput);
     searchBox.addListener('places_changed', function() {
@@ -27,9 +28,19 @@ export class MapContainer extends Component {
 
       places.forEach(function(place) {
         map.setCenter(place.geometry.location);
+
+        let marker = new google.maps.Marker({
+          map: map,
+          position: place.geometry.location});
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infoWindow.setContent(place.name);
+          infoWindow.open(map, marker);
+        });
       });
     })
 
+    // Mark the location list iteratively
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
           var pos = {
@@ -78,7 +89,7 @@ export class MapContainer extends Component {
         var infoWindowHTML = " \
           <div class='info-window'>\
             <div class='col1'>\
-              < div class='title'>Beautiful SeaView House</div><br/>\
+              <div class='title'>Beautiful SeaView House</div><br/>\
               <div class='features'>" + address + "</div><br/>\
               <a class='loc-detail' href='" + locationURL + "'>View place details</a>\
             </div>\
