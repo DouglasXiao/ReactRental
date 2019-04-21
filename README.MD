@@ -3,8 +3,6 @@
 ## target features
 
 ### Goal: 设计一款租房网站平台，可以满足以下几个功能
-
- 	提供房主发布信息
  
  	租客可以浏览信息
  
@@ -14,12 +12,15 @@
  
  	展示第三方平台发布的租房信息， Vanpeople， VanSky， craiglist
 
+	提供房主发布信息
 
 ### 技术架构
 
 	服务器端： Node.js, Express, MongoDB
 
-	前端框架: Vue.js, Semantic UI
+	前后端通信：socket.io (Based on WebSocket)
+
+	前端框架: React
 
 ### Reference: 
 
@@ -132,5 +133,8 @@ The system will crawl rental information of 58 tongcheng, and Baidu map for visu
 </pre>
 
 ## Web crawler js framework
-SuperAgent (HTTP GET/POST Library): https://www.jianshu.com/p/98b854322260
+SuperAgent (HTTP GET/POST Library): https://www.jianshu.com/p/98b854322260 \n
 Cheerio (Decode the HTML text): https://github.com/cheeriojs/cheerio
+
+## NodeJs backend bidirectional communication with React frontend
+socket.io: https://socket.io/docs/

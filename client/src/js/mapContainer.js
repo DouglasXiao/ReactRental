@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import io from 'socket.io-client';
  
 export class MapContainer extends Component {
   constructor(props) {
@@ -58,14 +59,46 @@ export class MapContainer extends Component {
         });
     }
 
-    var rentalList = [];
+    // Get data from nodejs backend, and mark them in React frontend
+    // TODO: Refactor this code into SearchBox, and each time release the client socket && when user search a new place, callback to new a client socket
+    const socket = io('http://localhost:8888');
+    socket.on('serverToClientChannel', function (data) {
+      console.log("socket io get data: " + data.lat + " " + data.lng);
+      console.log("Location URL: " + data.locationUrl);
+
+      var theLatLng = new google.maps.LatLng(data.lat, data.lng);
+
+      let marker = new google.maps.Marker({
+        map: map,
+        position: theLatLng});
+
+      var infoWindowHTML = " \
+        <div class='info-window'>\
+          <div class='col1'>\
+            <div class='title'>"+ data.title + "</div><br/>\
+            <div class='features'>" + (data.address !== null ? data.address : '') + "</div><br/>\
+            <a class='loc-detail' href='" + data.locationUrl + "'>View place details</a>\
+          </div>\
+          <div class='col-2'><img src=" + data.thumbnail + "/></div>\
+        </div>\
+      ";
+
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.setContent(infoWindowHTML);
+        infoWindow.open(map, marker);
+      });
+
+      socket.emit('clientToServerChannel', {my : 'data'});
+    });
+
+    /*var rentalList = [];
     rentalList.push('6058 selma ave, burnaby, bc, canada');
     rentalList.push('6033 selma ave, burnaby, bc, canada');
     rentalList.push('5175 Kingsway, Burnaby, BC V5H 2E6');
 
     for (var i = 0; i < rentalList.length; ++i) {
       this.decodeAndMarkAddress(geocoder, infoWindow, google, rentalList[i], map);
-    }
+    }*/
   }
 
   handleLocationError(browserHasGeolocation, infoWindow, map) {

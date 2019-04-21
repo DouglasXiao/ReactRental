@@ -28,19 +28,13 @@
 }
 
 .info-window .col1 {
-	float: right;
-	width: 166px;
 	word-wrap: break-word
 }
 
 .info-window .col-2 {
-	float: left;
-	width: 80px;
-	margin-right: 10px
-}
-
-.info-window .loc-detail {
-	float: left;
+	max-width: 100%;
+	padding-right: 0;
+	padding-left: 0;
 }
 
 .info-window .col-2 img {
@@ -50,14 +44,14 @@
 .info-window .title {
 	text-transform: uppercase;
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: 500;
 	display: block;
-	color: #f84b01
+	color: deeppink;
 }
 
 .info-window .features {
 	font-size: 14px;
-	font-weight: 500;
+	font-weight: 600;
 	display: block;
-	color: #333333
+	color: lightpink;
 }

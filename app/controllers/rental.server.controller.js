@@ -147,9 +147,7 @@ function getRentalInfosByUrl(url){
 	rentalInfosObj.push(url);
 }
 
-function tryToCrawWeb(url) {
-	var placeList = [];
-
+async function tryToCrawWeb(url, socket) {
 	superagent
 		.get(url)
 		.end(function(err, res) {
@@ -174,33 +172,47 @@ function tryToCrawWeb(url) {
 							.end(function(err, res) {
 								var $ = cheerio.load(res.text);
 
-								$('div').each(function(index, element) {
+								var lat = '';
+								var lng = '';
+								var locationUrl = theHref2;
+								var title = $('title').html();
+								var thumbnail = '';
+								var address = $('div[class=mapaddress]').html();
+
+								console.log("The map address is: " + address);
+								console.log("The title is: " + title);
+
+								// select all elements
+								$('*').each(function(index, element) {
 									if ($(element).attr('id') === 'map') {
-										placeList.push({lat: $(element)['0']['attribs']['data-latitude'], lng: $(element)['0']['attribs']['data-longitude']});
-										console.log('The lat and lng pair is: ' + $(element)['0']['attribs']['data-latitude'] + " " + $(element)['0']['attribs']['data-longitude']);
+										lat = $(element)['0']['attribs']['data-latitude'];
+										lng = $(element)['0']['attribs']['data-longitude'];
+									}
+
+									if ($(element).attr('property') === 'og:image') {
+										thumbnail = $(element)['0']['attribs']['content'];
+										console.log("thumbnail: " + thumbnail);
 									}
 								});
+
+								if (socket !== undefined) {
+									socket.emit('serverToClientChannel', {lat: lat, lng: lng, locationUrl: locationUrl, title: title, thumbnail: thumbnail, address: address});
+								}
 							});
 					});
 				});
 		});
-
-	return placeList;
 }
 
 
 
 module.exports = {
 	init(){
-		tryToCrawWeb('https://vancouver.craigslist.org');
-
 		updateRentalUrl();
 		rentalObj.register(getRentalInfosByUrl);
 	},
 
-	getRentalInfos(req, res, next){
-		// let params = tryToCrawWeb('https://vancouver.craigslist.org');
-		console.log('params',params)
-		res.json({result: true, params});
+	getRentalInfos(socket) {
+		tryToCrawWeb('https://vancouver.craigslist.org', socket);
 	}
 }
