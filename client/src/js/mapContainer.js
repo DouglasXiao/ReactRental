@@ -75,11 +75,11 @@ export class MapContainer extends Component {
       var infoWindowHTML = " \
         <div class='info-window'>\
           <div class='col1'>\
-            <div class='title'>Beautiful SeaView House</div><br/>\
-            <div class='features'>" + data.address + "</div><br/>\
+            <div class='title'>"+ data.title + "</div><br/>\
+            <div class='features'>" + (data.address !== null ? data.address : '') + "</div><br/>\
             <a class='loc-detail' href='" + data.locationUrl + "'>View place details</a>\
           </div>\
-          <div class='col-2'>thumbnailURL</div>\
+          <div class='col-2'><img src=" + data.thumbnail + "/></div>\
         </div>\
       ";
 
