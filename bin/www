@@ -3,6 +3,18 @@
 var app = require('../app')
 var config = require('../config/config');
 
-app.listen(config.port, function(){
-	console.log('app started,listen on port:',config.port);
-})
+const initDb = require('../config/dbMongo').initDb;
+
+var controller = require('../app/controllers/rental.server.controller');
+
+
+initDb(function (err, dbInstance) {
+	app.listen(config.port, function(err) {
+		if (err) {
+			throw err;
+		}
+		console.log('app started, listen on port: ' + config.port);
+
+		controller.crawRentalInfos(dbInstance);
+	});
+});

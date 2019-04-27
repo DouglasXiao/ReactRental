@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var controller = require('../app/controllers/rental.server.controller');
 
+
 module.exports = function(){
 	console.log('init express..');
 	var app = express();
@@ -21,7 +22,7 @@ module.exports = function(){
 		controller.getRentalInfos(socket);
 
 		socket.on('clientToServerChannel', function(data) {
-			console.log("clientToServerChannel data: " + data);
+			// console.log("clientToServerChannel data: " + data);
 		});
 	});
 

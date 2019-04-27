@@ -61,6 +61,7 @@ export class MapContainer extends Component {
 
     // Get data from nodejs backend, and mark them in React frontend
     // TODO: Refactor this code into SearchBox, and each time release the client socket && when user search a new place, callback to new a client socket
+    // BUG: each time after using, client should release the socket, or it will continue to connect the server side socket
     const socket = io('http://localhost:8888');
     socket.on('serverToClientChannel', function (data) {
       console.log("socket io get data: " + data.lat + " " + data.lng);
@@ -77,7 +78,7 @@ export class MapContainer extends Component {
           <div class='col1'>\
             <div class='title'>"+ data.title + "</div><br/>\
             <div class='features'>" + (data.address !== null ? data.address : '') + "</div><br/>\
-            <a class='loc-detail' href='" + data.locationUrl + "'>View place details</a>\
+            <a class='loc-detail' target='new' href='" + data.locationUrl + "'>View place details</a>\
           </div>\
           <div class='col-2'><img src=" + data.thumbnail + "/></div>\
         </div>\
