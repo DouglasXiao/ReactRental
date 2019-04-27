@@ -146,10 +146,13 @@ socket.io: https://socket.io/docs/
 
 ## FAQ
 1. In MongoDB, always report "Error: connect ECONNREFUSED 127.0.0.1:27017"
+
 A: Because the local mongodb is not started, which means not in service. Install and start local MongoDB service: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/
 
 2. dbo.collection is not a function
+
 A: Because the way input db instance is not correct, should input the db instance parameter into callback functions.
 
 3. After insert data successfully in code, how to check from shell command?
+
 A: 1) mongo; 2) db = connect("mongodb://localhost:27017/localDB"); 3) db.rentalInfos.find({})
