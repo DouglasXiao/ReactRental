@@ -106,13 +106,16 @@ npm start  (client side)
 	open localhost:3000
 
 
-## 简介 Introduction
+## Introduction
 
 A crawler system based on Node.js in backend and React in frontend.
 
 The system will crawl rental information of 58 tongcheng, and Baidu map for visual display, user-friendly quickly find their own near the rental information.
 
-## 目录结构 Directory Structure
+## Backend and Frontend architecture
+![ReactRentalArchitecture](https://user-images.githubusercontent.com/12426243/56856249-484be180-690b-11e9-9f1a-1225e44fc1b5.jpg)
+
+## Directory Structure
 <pre>
 |- app                  # node backend
      |
