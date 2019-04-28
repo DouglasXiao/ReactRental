@@ -27,19 +27,52 @@ export class MapContainer extends Component {
         return;
       }
 
-      places.forEach(function(place) {
-        map.setCenter(place.geometry.location);
+      // recenter the map to user's searching address
+      var newCenter = places[0].geometry.location;
+      map.setCenter(newCenter);
+      let marker = new google.maps.Marker({
+        map: map,
+        position: newCenter});
 
-        let marker = new google.maps.Marker({
-          map: map,
-          position: place.geometry.location});
-
-        google.maps.event.addListener(marker, 'click', function() {
-          infoWindow.setContent(place.name);
-          infoWindow.open(map, marker);
-        });
+      google.maps.event.addListener(marker, 'click', function() {
+        infoWindow.setContent(places[0].name);
+        infoWindow.open(map, marker);
       });
-    })
+
+      // Get data from nodejs backend, and mark them in React frontend
+      const socket = io('http://localhost:8888');
+      socket.emit('clientToServerChannel', newCenter);
+      socket.on('serverToClientChannel', function (allData) {
+        allData.forEach(function(data) {
+          console.log("socket io get data: " + data.lat + " " + data.lng);
+          console.log("Location URL: " + data.locationUrl);
+
+          var theLatLng = new google.maps.LatLng(data.lat, data.lng);
+
+          let marker = new google.maps.Marker({
+            map: map,
+            position: theLatLng});
+
+          var infoWindowHTML = " \
+            <div class='info-window'>\
+              <div class='col1'>\
+                <div class='title'>"+ data.title + "</div><br/>\
+                <div class='features'>" + (data.address !== null ? data.address : '') + "</div><br/>\
+                <a class='loc-detail' target='new' href='" + data.locationUrl + "'>View place details</a>\
+              </div>\
+              <div class='col-2'><img src=" + data.thumbnail + "/></div>\
+            </div>\
+          ";
+
+          google.maps.event.addListener(marker, 'click', function() {
+            infoWindow.setContent(infoWindowHTML);
+            infoWindow.open(map, marker);
+          });
+        });
+        // TODO: Try to disconnect socket in client side after this searching
+      });
+
+    });
 
     // Mark the location list iteratively
     if (navigator.geolocation) {
@@ -58,39 +91,6 @@ export class MapContainer extends Component {
           this.handleLocationError(true, infoWindow, map);
         });
     }
-
-    // Get data from nodejs backend, and mark them in React frontend
-    // TODO: Refactor this code into SearchBox, and each time release the client socket && when user search a new place, callback to new a client socket
-    // BUG: each time after using, client should release the socket, or it will continue to connect the server side socket
-    const socket = io('http://localhost:8888');
-    socket.on('serverToClientChannel', function (data) {
-      console.log("socket io get data: " + data.lat + " " + data.lng);
-      console.log("Location URL: " + data.locationUrl);
-
-      var theLatLng = new google.maps.LatLng(data.lat, data.lng);
-
-      let marker = new google.maps.Marker({
-        map: map,
-        position: theLatLng});
-
-      var infoWindowHTML = " \
-        <div class='info-window'>\
-          <div class='col1'>\
-            <div class='title'>"+ data.title + "</div><br/>\
-            <div class='features'>" + (data.address !== null ? data.address : '') + "</div><br/>\
-            <a class='loc-detail' target='new' href='" + data.locationUrl + "'>View place details</a>\
-          </div>\
-          <div class='col-2'><img src=" + data.thumbnail + "/></div>\
-        </div>\
-      ";
-
-      google.maps.event.addListener(marker, 'click', function() {
-        infoWindow.setContent(infoWindowHTML);
-        infoWindow.open(map, marker);
-      });
-
-      socket.emit('clientToServerChannel', {my : 'data'});
-    });
 
     /*var rentalList = [];
     rentalList.push('6058 selma ave, burnaby, bc, canada');

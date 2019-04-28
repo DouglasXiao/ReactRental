@@ -1,6 +1,5 @@
 var express = require('express');
 var bodyParser = require('body-parser');
-var controller = require('../app/controllers/rental.server.controller');
 
 
 module.exports = function(){
@@ -8,23 +7,6 @@ module.exports = function(){
 	var app = express();
 
 	app.use(bodyParser.json());
-
-	require('../app/routes/rental.server.routes')(app);
-	controller.init();
-
-	// Add socket io
-	var server = require('http').Server(app);
-	var io = require('socket.io')(server);
-
-	server.listen(8888);
-
-	io.on('connection', function(socket) {
-		controller.getRentalInfos(socket);
-
-		socket.on('clientToServerChannel', function(data) {
-			// console.log("clientToServerChannel data: " + data);
-		});
-	});
 
 	app.use(function(req, res, next){
 		res.status(404);
