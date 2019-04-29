@@ -115,6 +115,9 @@ The system will crawl rental information of 58 tongcheng, and Baidu map for visu
 ## Backend and Frontend architecture
 ![ReactRentalArchitecture](https://user-images.githubusercontent.com/12426243/56856249-484be180-690b-11e9-9f1a-1225e44fc1b5.jpg)
 
+## Backend and Frontend detailing workflow
+![ReactRentalArchitectureInDetails](https://user-images.githubusercontent.com/12426243/56877133-bde5a980-6a00-11e9-8f4f-b6653f262d44.png)
+
 ## Directory Structure
 <pre>
 |- app                  # node backend
