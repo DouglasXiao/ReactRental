@@ -15,6 +15,27 @@ function insertOneLine(instance, line) {
         });
 }
 
+function queryLines(instance, socket) {
+        if (!instance) {
+                console.warn("The mongodb instance is not valid!");
+        }
+
+        // collection
+        const table = instance.collection(dbConfig.collectionName);
+
+        // query data
+        // TODO: when finding locations, need to filter the places by distance
+        table.find({}).toArray(function(err, result) {
+                if (err) throw err;
+                console.log(result);
+                
+                if (socket !== undefined) {
+                        socket.emit('serverToClientChannel', result);
+                }
+        });
+}
+
 module.exports = {
         insertOneLine,
+        queryLines,
 };

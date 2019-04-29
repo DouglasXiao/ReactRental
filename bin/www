@@ -6,6 +6,7 @@ var config = require('../config/config');
 const initDb = require('../config/dbMongo').initDb;
 
 var controller = require('../app/controllers/rental.server.controller');
+const initSocketIO = require('../app/routes/rental.server.routes').initSocketIO;
 
 
 initDb(function (err, dbInstance) {
@@ -16,5 +17,6 @@ initDb(function (err, dbInstance) {
 		console.log('app started, listen on port: ' + config.port);
 
 		controller.crawRentalInfos(dbInstance);
+		initSocketIO(dbInstance, app);
 	});
 });
